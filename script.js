@@ -21,37 +21,71 @@ class Calculator {
     this.currentOperandTextElement = currentOperandTextElement;
     this.clear();
   }
-
+}
   
-// functions on click
-  clear() {
-    this.currentOperand = "";
-    this.previousOperand = "";
-    this.operation = undefined;
+  function updateDisplay() {
+    previousOperandTextElement.innerText = previousOperand;
+    currentOperandTextElement.innerText = currentOperand;
   }
+  
 
-  delete() {
-    this.currentOperand = this.currentOperand.toString().slice(0, -1);
-  }}
-
-
-// Buttons Operations
   numberButtons.forEach((button) => {
-    button.addEventListener("click", function(){
-        
-    })
+    button.addEventListener('click', () => {
+      currentOperand += button.innerText;
+      updateDisplay();
+    });
   });
   
-  operationsButtons.forEach((button) => {
-    button.addEventListener("click", function(){
 
-    })
+  operationButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      operation = button.innerText;
+      previousOperand = currentOperand;
+      currentOperand = '';
+      updateDisplay();
+    });
   });
+  
 
-  equalsButton.addEventListener("click", calculator.total());
+  equalsButton.addEventListener('click', () => {
+    let computation;
+    const prev = parseFloat(previousOperand);
+    const current = parseFloat(currentOperand);
+    if (isNaN(prev) || isNaN(current)) return;
   
-  allClearButton.addEventListener("click", calculator.clear());
+    switch (operation) {
+      case '+':
+        computation = prev + current;
+        break;
+      case '-':
+        computation = prev - current;
+        break;
+      case '*':
+        computation = prev * current;
+        break;
+      case '÷':
+        computation = prev / current;
+        break;
+      default:
+        return;
+    }
   
-  deleteButton.addEventListener("click", calculator.delete());
+    currentOperand = computation;
+    operation = '';
+    previousOperand = '';
+    updateDisplay();
+  });
+  
+ 
+  allClearButton.addEventListener('click', () => {
+    previousOperand = '';
+    currentOperand = '';
+    operation = '';
+    updateDisplay();
+  });
+  
 
-  
+  deleteButton.addEventListener('click', () => {
+    currentOperand = currentOperand.slice(0, -1);
+    updateDisplay();
+  });
