@@ -36,6 +36,20 @@ body {
     grid-column: span 2;
 }
 
+.output {
+    /* spans through the whole column */
+    grid-column: 1 / -1;
+    background-color: rgba(0, 0, 0, .75);
+    display: flex;
+    border-radius: 10px;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    word-wrap: break-word;
+    /* line break incase the numbers span out */
+}
+
 
 .output .previous-operand {
     color: rgba(255, 255, 255, .75);
